@@ -4,6 +4,7 @@
   "description": "note taker with Express and Heroku",
   "main": "server.js",
   "scripts": {
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,6 +19,7 @@
   "homepage": "https://github.com/Terence-A/noteTaker_Express#readme",
   "dependencies": {
     "express": "^4.18.2",
+    "nodemon": "^3.0.1",
     "uuid": "^9.0.0"
   }
 }
