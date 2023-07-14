@@ -34,6 +34,14 @@ app.post("/api/notes", (req, res) => {
   res.json(data);
 });
 
+// delete record by data id in db.json
+app.delete("/api/notes/:id", (req, res) => {
+  const { id } = req.params;
+  data = data.filter((d) => d.id !== id);
+  fs.writeFileSync("./db/db.json", JSON.stringify(data));
+  res.json(data);
+});
+
 //get req takes you to home page
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "/public/index.html"));
