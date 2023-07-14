@@ -1,10 +1,14 @@
+// add Dependencies and modules
 const express = require("express");
 const port = process.env.PORT || 3001;
 const path = require("path");
 const app = express();
 const fs = require("fs");
-const data = require("./db/db.json");
+let data = require("./db/db.json");
+const { v4: uuid } = require("uuid");
+// console.log(data);
 
+// use middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
@@ -14,16 +18,20 @@ app.get("/notes", (req, res) => {
   res.sendFile(path.join(__dirname, "public/notes.html"));
 });
 
-// app.get("/api/notes", (req, res) => {});
-
+// read api/notes  from db.json file
 app.get("/api/notes", (req, res) => {
-  console.log(data);
+  fs.readFileSync("data");
+  res.json(data);
 });
 
+// post api/notes, add to db.json along with id
 app.post("/api/notes", (req, res) => {
-  res.send("response sent");
-  //   res.readFile(path.join(__dirname, "db/db.json"));
-  //   fs.writeFile("/db/db.json", "utf8");
+  const { title, text } = req.body;
+  data.push({ title, text, id: uuid() });
+  fs.writeFile("./db/db.json", JSON.stringify(data), (err) => {
+    if (err) throw err;
+  });
+  res.json(data);
 });
 
 //get req takes you to home page
@@ -31,6 +39,7 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "/public/index.html"));
 });
 
+// listen for server port
 app.listen(port, () => {
   console.log(`Server listening on port: ${port}`);
 });
