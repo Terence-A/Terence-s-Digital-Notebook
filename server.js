@@ -1,11 +1,13 @@
 // add Dependencies and modules
 const express = require("express");
-const port = process.env.PORT || 3001;
 const path = require("path");
 const app = express();
 const fs = require("fs");
 let data = require("./db/db.json");
 const { v4: uuid } = require("uuid");
+
+//create port variable
+const port = process.env.PORT || 3001;
 // console.log(data);
 
 // use middleware
