@@ -1,13 +1,21 @@
 const express = require("express");
+const port = process.env.PORT || 3001;
+const path = require("path");
 const app = express();
 const fs = require("fs");
 
-app.get('/notes', (get,res)={
-    
-})
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.static("public"));
 
-app.get ('*', (get,res)=>{
+app.get("/notes", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/notes.html"));
+});
 
-})
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/public/index.html"));
+});
 
-const port = porcess.env.PORT || 3001;
+app.listen(port, () => {
+  console.log(`Server listening on port: ${port}`);
+});
